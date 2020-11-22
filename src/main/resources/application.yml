@@ -9,6 +9,8 @@ spring:
       url: jdbc:mysql://127.0.0.1:3306/my_cloud?useUnicode=true&characterEncoding=UTF-8
       driver-class-name: com.mysql.jdbc.Driver #直接打mysql会有提示
       type: com.alibaba.druid.pool.DruidDataSource
+  freemarker:
+    cache: false
   thymeleaf:
     #缓冲的配置
     cache: false
@@ -21,6 +23,9 @@ spring:
     prefix: classpath:/templates/thymeleaf/
     suffix: .html
     # mybatis-plus相关配置
+  devtools:
+    restart:
+      enabled: true
 mybatis-plus:
       # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*.xml
       # 如果是放在resource目录 classpath:mapper/*.xml
@@ -39,4 +44,4 @@ mybatis-plus:
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
-      port: 80
+    port: 80
