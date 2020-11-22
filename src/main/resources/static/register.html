@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>实验4</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+</head>
+<body>
+
+<div>
+    <input type="text" id="text" placeholder="请输入用户名">
+    <input type="password" id="password" placeholder="请输入密码">
+    <button id="reb">重置</button>
+    <button id="button">注册</button>
+    <span id="span"></span>
+    <script type="text/javascript">
+        var pwOk = 0;
+        var span = document.getElementById("span");
+        var text = document.getElementById("text");
+        var password = document.getElementById("password");
+        var button = document.getElementById("button");
+        button.onclick = function () {
+            var t1 = text.value;
+            var p1 = password.value;
+            var b = /^(?=.*[0-9])(?=.*[a-zA-Z])(.{6,9})$/;
+            if (b.test(p1) && t1 != "") {
+                span.innerHTML = "密码符合要求";
+                span.style.color = "blue";
+                var user = {
+                    username: t1,
+                    password: p1
+                };
+                $.ajax({
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    url: "http://39.108.251.68/user/register",
+                    data: JSON.stringify(user),
+                    success: function (data, status) {
+                        console.log(data);
+                        console.log(status);
+                    }, error: function (e) {
+                        console.log(e);
+                    },
+                    complete: function () {
+
+                    }
+
+                });
+
+            } else {
+                span.innerHTML = "密码不符合要求";
+                span.style.color = "red";
+                return;
+            }
+        }
+
+        document.getElementById("reb").onclick = function () {
+            text.value = "";
+            password.value = "";
+            span.innerHTML = "";
+        }
+    </script>
+</div>
+</body>
+</html>

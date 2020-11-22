@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>皮了卡了丘的云</title>
+    <meta name="baidu-site-verification" content="code-UjO88OlYW4" />
+    <link rel="Shortcut Icon" href="../ico/myico.ico" type="image/x-icon"/>
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <!--        <link rel="stylesheet" href="css/styles.min.css">-->
+    <style>
+        .dropdown-item:hover {
+            background-color: #0000000a !important;
+        }
+
+        .dropdown-menu {
+            background-color: #e3f2fd;
+        }
+
+        label {
+            width: 207px;
+        }
+
+        .row {
+            background-color: #0000000a;
+        }
+
+        nav {
+            margin-right: -15px;
+            margin-left: -15px;
+            background-color: #e3f2fd;
+        }
+
+        .login-dark {
+            background: url(/static/img/star-sky.jpg) 0 0/cover #475d62;
+            position: relative
+        }
+
+        .ming:hover {
+            z-index: 9;
+            background-color: #00000029;
+            transform: scale(1.5, 1.5);
+            transition: 0.5s;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container" id="app">
+    <!-- Image and text -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand " href="#">
+            <img src="tou.jpg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+            皮了卡了丘的云
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" v-if="isLogin">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">个人中心 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/MoBinMing" target="_blank">GitHub</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">在线简历</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">我的云盘</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">我的备忘录</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        设置
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="#">设置主题</a>
+                        <a class="dropdown-item" type="button" @click="isLogin=!isLogin">退出登录</a>
+                        <a class="dropdown-item" href="#">关于</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="row mt-1 p-2 ">
+        <!--        <div class="alert alert-success alert-dismissible fade show">-->
+        <!--            <button type="button" class="close" data-dismiss="alert">&times;</button>-->
+        <!--            <strong>成功!</strong> 指定操作成功提示信息。-->
+        <!--        </div>-->
+
+    </div>
+    <div class="row mt-1 p-2" v-if="!isLogin" >
+        <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 p-5 mt-1 text-center"
+             style="background-color: #e3f2fd;">
+            <form method="post" id="k">
+                <div class="form-group">
+                    <svg width="5em" height="5em" viewBox="0 0 16 16" class="bi bi-cloud" fill="currentColor"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.406 3.342A5.53 5.53 0 0 1 8 2c2.69 0 4.923 2 5.166 4.579C14.758 6.804 16 8.137 16 9.773 16 11.569 14.502 13 12.687 13H3.781C1.708 13 0 11.366 0 9.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383zm.653.757c-.757.653-1.153 1.44-1.153 2.056v.448l-.445.049C2.064 6.805 1 7.952 1 9.318 1 10.785 2.23 12 3.781 12h8.906C13.98 12 15 10.988 15 9.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 4.825 10.328 3 8 3a4.53 4.53 0 0 0-2.941 1.1z"/>
+                    </svg>
+                </div>
+
+                <div class="form-group"><label>
+                    <input class="form-control" v-model="username" type="text" name="username"
+                           placeholder="username"/>
+                </label></div>
+                <div class="form-group"><label>
+                    <input class="form-control" v-model="password" type="password" name="password"
+                           placeholder="Password"/>
+                </label>
+                </div>
+                <div class="form-group"><label>
+                    <button class="btn btn-primary btn-block" type="button" @click="loginSubmit">
+                        <span class="spinner-border spinner-border-sm" v-show="loginIng"
+                              v-bind:class="{disabled:loginIng}" role="status" aria-hidden="true"></span>
+                        {{loginIng?'正在登录...':'登录'}}
+                    </button>
+                </label>
+                </div>
+                <a class="forgot" href="#">忘记了你的电子邮件或密码?</a></form>
+
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 p-5 mt-2 text-center"
+             style="background-color: #e3f2fd;">
+            <div class="row">
+                <div class="col-6 mx-auto col-md-4 order-md-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="512"
+                         height="430" class="img-fluid mb-3 mb-md-0" viewBox="0 0 1024 860" focusable="false"
+                         role="img"><title>Bootstrap</title>
+                        <defs>
+                            <linearGradient id="c" x1="50%" x2="50%" y1="0%" y2="100%">
+                                <stop offset="0%" stop-color="#5c24ae"></stop>
+                                <stop offset="100%" stop-color="#30135a"></stop>
+                            </linearGradient>
+                            <path id="b"
+                                  d="M355.967 242.807l-322 216.395c-44.275 29.754-44.275 78.443 0 108.197l322 216.395c44.275 29.754 116.725 29.754 161 0l322-216.395c44.275-29.754 44.275-78.443 0-108.197l-322-216.395c-44.275-29.754-116.725-29.754-161 0z"></path>
+                            <filter id="a" width="108%" height="112%" x="-4%" y="-4.3%" filterUnits="objectBoundingBox">
+                                <feOffset dy="10" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                                <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1"
+                                                stdDeviation="10"></feGaussianBlur>
+                                <feColorMatrix in="shadowBlurOuter1"
+                                               values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                            </filter>
+                            <linearGradient id="f" x1="50%" x2="50%" y1="-17.303%" y2="100%">
+                                <stop offset="0%" stop-color="#7331d4"></stop>
+                                <stop offset="100%" stop-color="#461b84"></stop>
+                            </linearGradient>
+                            <path id="e"
+                                  d="M355.967 132.807l-322 216.395c-44.275 29.754-44.275 78.443 0 108.197l322 216.395c44.275 29.754 116.725 29.754 161 0l322-216.395c44.275-29.754 44.275-78.443 0-108.197l-322-216.395c-44.275-29.754-116.725-29.754-161 0z"></path>
+                            <filter id="d" width="108%" height="112%" x="-4%" y="-4.3%" filterUnits="objectBoundingBox">
+                                <feOffset dy="10" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                                <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1"
+                                                stdDeviation="10"></feGaussianBlur>
+                                <feColorMatrix in="shadowBlurOuter1"
+                                               values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                            </filter>
+                            <linearGradient id="i" x1="50%" x2="50%" y1="0%" y2="100%">
+                                <stop offset="0%" stop-color="#905bdd"></stop>
+                                <stop offset="100%" stop-color="#5521a0"></stop>
+                            </linearGradient>
+                            <path id="h"
+                                  d="M355.967 22.807l-322 216.395c-44.275 29.754-44.275 78.443 0 108.197l322 216.395c44.275 29.754 116.725 29.754 161 0l322-216.395c44.275-29.754 44.275-78.443 0-108.197l-322-216.395c-44.275-29.754-116.725-29.754-161 0z"></path>
+                            <filter id="g" width="108%" height="112%" x="-4%" y="-4.3%" filterUnits="objectBoundingBox">
+                                <feOffset dy="10" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+                                <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1"
+                                                stdDeviation="10"></feGaussianBlur>
+                                <feColorMatrix in="shadowBlurOuter1"
+                                               values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                            </filter>
+                        </defs>
+                        <g fill="none">
+                            <g transform="translate(75 23)">
+                                <use fill="#000" filter="url(#a)" xlink:href="#b"></use>
+                                <use fill="url(#c)" xlink:href="#b"></use>
+                            </g>
+                            <g transform="translate(75 23)">
+                                <use fill="#000" filter="url(#d)" xlink:href="#e"></use>
+                                <use fill="url(#f)" xlink:href="#e"></use>
+                            </g>
+                            <g transform="translate(75 23)">
+                                <use fill="#000" filter="url(#g)" xlink:href="#h"></use>
+                                <use fill="url(#i)" xlink:href="#h"></use>
+                            </g>
+                            <path fill="#fff"
+                                  d="M558.273 447.667L308.036 279.5l97.982-65.847c42.83-28.784 96.789-31.483 134.245-6.311 26.044 17.502 31.214 46.615 11.444 65.724l1.389.934c38.324-19.932 84.107-18.527 117.396 3.845 44.046 29.6 38.671 68.419-14.561 104.193l-97.658 65.629zM447.112 331.01l49.942-33.562c36.935-24.822 42.31-48.249 15.224-66.451-24.798-16.665-55.49-14.453-85.851 5.95l-59.641 40.081 80.326 53.982zm176.532 35.663c37.63-25.289 42.136-48.832 13.203-68.276-28.932-19.444-64.163-15.614-104.042 11.186l-58.789 39.508 87.92 59.084 61.708-41.502z"></path>
+                        </g>
+                    </svg>
+                </div>
+                <div class="col-md-8 order-md-1 text-center text-md-left pr-md-5">
+                    <h1 class="mb-3">利用 Bootstrap 构建快速、响应式的网站</h1>
+                    <p class="lead mb-4">
+                        Bootstrap 是全球最受欢迎的前端开源工具库，它支持 Sass 变量和 mixin、响应式栅格系统、自带大量组件和众多强大的 JavaScript 插件。基于 Bootstrap
+                        提供的强大功能，能够让你快速设计并自定义你的网站。
+                    </p>
+                    <div class="d-flex flex-column flex-md-row">
+                        <a href="https://v4.bootcss.com/docs/getting-started/introduction/"
+                           class="btn btn-lg btn-bd-primary mb-3 mr-md-3"
+                           onclick="ga('send', 'event', 'Jumbotron actions', 'Get started', 'Get started');">快速入门</a>
+                        <a href="https://v4.bootcss.com/docs/getting-started/download/"
+                           class="btn btn-lg btn-outline-secondary mb-3"
+                           onclick="ga('send', 'event', 'Jumbotron actions', 'Download', 'Download 4.5.0');">下载
+                            Bootstrap</a>
+                    </div>
+                    <p class="text-muted mb-0">
+                        当前版本：v4.5.0
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="row mt-2 p-2" v-if="!isLogin" >
+        <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ming p-1"
+             v-for="(book,index) in books" :key="index">
+            <div class="row m-1 border border-primary">
+                <div class="col-3 p-0 d-flex align-items-center">
+                    <img class="img-fluid d-block" :src="book.imgUrl"
+                         οnerrοr="javascript:this.src='book.imgUrl2';">
+                </div>
+                <div class="col-9">
+                    <p class="mb-1"><b>{{ book.name }}</b></p>
+                    <p class="mb-0">{{ book.title }}<br>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-2 p-2 text-center">
+      <span>
+        <a href="https://beian.miit.gov.cn/" target="_blank">
+          <img width="10" height="10" src="https://www-static.chinacdn.starbucks.com.cn/prod/assets/images/icpicon.png">&nbsp;桂ICP备 2020008513号-1
+        </a>
+      </span>
+        |
+        <a href="http://www.beian.miit.gov.cn" target="_blank">2020008513号-1</a>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            books: null,
+            username: "",
+            password: "",
+            isLogin: false,
+            loginIng: false,
+        },
+        created () {
+            //在页面加载时读取sessionStorage里的状态信息
+            if (sessionStorage.getItem("isLogin")!=null ) {
+                const b = sessionStorage.getItem("isLogin");
+                isLogin=Boolean(b);
+            }
+
+            //在页面刷新时将vuex里的信息保存到sessionStorage里
+            window.addEventListener("beforeunload",()=>{
+                sessionStorage.setItem("isLogin",this.data.isLogin);
+            })
+        },
+        mounted() {
+            axios
+                .get('/cloud_service/book/api/getAll')
+                .then(response => (this.books = response.data))
+                .catch(function (error) { // 请求失败处理
+                    console.log(error);
+                });
+        },
+        methods: {
+            loginSubmit() {
+                this.loginIng = true;
+                const _this = this;
+                axios
+                    .post('/cloud_service/user/login', {
+                        username: _this.username,        // 参数 firstName
+                        password: _this.password,    // 参数 lastName
+                    })
+                    .then(function (response) {
+                        if (response.data === "登录成功") {
+                            setTimeout(function () {
+                                _this.isLogin = true;
+                                _this.loginIng = false;
+                                sessionStorage.setItem("isLogin",'true');
+                            }, 300);
+                        }
+                    })
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                        alert(error);
+                    });
+            },
+
+
+        },
+    });
+</script>
+</body>
+
+</html>

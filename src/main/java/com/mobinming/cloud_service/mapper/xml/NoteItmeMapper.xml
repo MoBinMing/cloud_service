@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mobinming.cloud_service.mapper.NoteItmeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.mobinming.cloud_service.entity.NoteItme">
+        <id column="id" property="id" />
+        <result column="note_category_id" property="noteCategoryId" />
+        <result column="name" property="name" />
+        <result column="content" property="content" />
+        <result column="edit_date" property="editDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, note_category_id, name, content, edit_date
+    </sql>
+
+</mapper>

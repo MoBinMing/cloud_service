@@ -1,0 +1,80 @@
+.navbar-brand.d-flex.d-sm-flex.d-xl-flex.align-items-center.justify-content-sm-center.align-items-sm-start.align-items-lg-center.align-items-xl-center {
+  color: rgba(255,255,255,0.9);
+}
+
+img {
+  width: 60px;
+  height: 40px;
+}
+
+.logodiv {
+  margin-left: 10px;
+}
+
+form {
+  max-width: 320px;
+  width: 90%;
+  background-color: #1e2833;
+  padding: 40px;
+  border-radius: 4px;
+  transform: translate(-50%, -50%);
+  position: inherit;
+  top: 50%;
+  left: 50%;
+  color: #fff;
+  box-shadow: 3px 3px 4px rgba(0,0,0,0.2);
+  background-color: rgba(40,45,50,0.41);
+}
+
+label {
+  width: 100%;
+  text-align: center;
+}
+
+span {
+  font-size: 30px;
+  margin-left: 10px;
+}
+
+.row {
+  background-color: rgba(0,0,0,0.43);
+}
+
+imput {
+  background-color: initial;
+}
+
+.form-control {
+  background-color: initial;
+}
+
+.logodiv {
+  margin-left: 10px;
+}
+
+p {
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+.d-flex.align-items-start {
+  font-size: 15px;
+}
+
+.navbar-light .navbar-nav .nav-link:focus, .navbar-light .navbar-nav .nav-link:hover {
+  color: rgb(0,0,0);
+  background-color: rgba(255,255,255,0.47);
+}
+
+.navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.active, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.logoImg {
+  width: 60px;
+  height: 40px;
+}
+
+
+
+
