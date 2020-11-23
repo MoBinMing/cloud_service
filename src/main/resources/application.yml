@@ -42,6 +42,19 @@ mybatis-plus:
         call-setters-on-nulls: true
         # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
         log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+shiro-redis:
+  enabled: true
+  redis-manager:
+    host: 127.0.0.1:6379
+    password: 123456
+    timeout: 2000
+mobinming:
+  jwt:
+    # 加密秘钥
+    secret: f4e2e52034348f86b67cde581c0f9eb5
+    # token有效时长，7天，单位秒
+    expire: 604800
+    header: token
 
 server:
     port: 80

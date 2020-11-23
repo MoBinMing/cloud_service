@@ -3,6 +3,7 @@ package com.mobinming.cloud_service.controller;
 
 import com.mobinming.cloud_service.util.jwt.WebLoginToken;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,6 +26,7 @@ public class RootController {
     //    @Autowired
     //    private HttpServletRequest request;
     @WebLoginToken
+
     @GetMapping("home")
     public String home() {
         return "home";

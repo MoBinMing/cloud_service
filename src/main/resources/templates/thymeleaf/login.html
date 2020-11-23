@@ -145,18 +145,16 @@
                 this.loginIng = true;
                 const _this = this;
                 axios
-                    .post('/cloud_service/user/login', {
+                    .post('/api/login', {
                         username: _this.username,        // 参数 firstName
                         password: _this.password,    // 参数 lastName
                     })
                     .then(function (response) {
-                        if (response.data.message === "登录成功") {
+                        if (response.data.code === 200) {
                             //setTimeout(function () {
                             _this.isLogin = true;
                             _this.loginIng = false;
-                            sessionStorage.setItem("token", response.data.token);
-                            _this.setCookie("token",response.data.token,1);
-                            console.log(_this.getCookie("token"));
+                            console.log(response.data.data)
                             // axios.post("/cloud_service/home",{
                             //     'kk':'k'
                             // },{
