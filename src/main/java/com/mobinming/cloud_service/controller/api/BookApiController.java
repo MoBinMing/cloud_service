@@ -1,6 +1,7 @@
 package com.mobinming.cloud_service.controller.api;
 
 
+import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.entity.Book;
 import com.mobinming.cloud_service.service.BookService;
 import io.swagger.annotations.ApiOperation;
@@ -27,8 +28,9 @@ public class BookApiController {
 
     @ApiOperation(value = "获取所有课本列表", notes = "获取所有课本列表")
     @GetMapping("getAllBook")
-    public List<Book> getBook() {
-        return service.list();
+    public Result getBook() {
+        List<Book> bookList=service.list();
+        return Result.succ(200,"获取成功",bookList);
     }
 }
 
