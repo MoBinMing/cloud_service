@@ -54,13 +54,13 @@ public class JwtFilter extends AuthenticatingFilter {
                 if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
                     // 这里判断是否为ajax请求且是以.do结尾的
                     // 如果不是会走shiro默认的权限流程
-                    if (isAjax(request)) {
+                    if (request.getServletPath().equals("/logout")) {
+                        return true;
+                    } else {
                         httpResponse.setContentType("application/json;charset=utf-8");
                         httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
                         httpResponse.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest)servletRequest).getHeader("Origin"));
                         httpResponse.getWriter().print(JSONUtil.toJsonStr(Result.fail(500,"token已失效，请重新登录",null)));
-                    } else {
-                        saveRequestAndRedirectToLogin(request, httpResponse);
                     }
                     return false;
                     //throw new ExpiredCredentialsException("token已失效，请重新登录");

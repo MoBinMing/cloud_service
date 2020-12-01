@@ -55,7 +55,7 @@ mobinming:
     # token有效时长，7天，单位秒
     #expire: 604800
     #两天有效
-    expire: 172800
+    expire: 50000
     header: token
 
 server:
