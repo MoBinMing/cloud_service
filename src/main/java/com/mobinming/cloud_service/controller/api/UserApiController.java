@@ -12,6 +12,7 @@ import com.mobinming.cloud_service.service.BookService;
 import com.mobinming.cloud_service.service.UserService;
 import com.mobinming.cloud_service.util.JwtUtils;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -54,6 +55,13 @@ public class UserApiController {
                 .put("token",jwt)
                 .map()
         );
+    }
+
+    @RequiresAuthentication
+    @GetMapping("/logout")
+    public Result logout() {
+        SecurityUtils.getSubject().logout();
+        return Result.succ(null);
     }
 }
 

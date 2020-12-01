@@ -27,6 +27,7 @@ public class RootController {
     //    private HttpServletRequest request;
     @WebLoginToken
 
+    @RequiresAuthentication
     @GetMapping("home")
     public String home() {
         return "home";

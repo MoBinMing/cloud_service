@@ -1,12 +1,15 @@
 package com.mobinming.cloud_service.shiro;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.util.JwtUtils;
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExpiredCredentialsException;
+import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 
 @Component
 public class JwtFilter extends AuthenticatingFilter {
@@ -46,13 +50,26 @@ public class JwtFilter extends AuthenticatingFilter {
         if(StringUtils.isEmpty(jwt)) {
             return true;
         } else {
-
-            // 校验jwt
-            Claims claim = jwtUtils.getClaimByToken(jwt);
-            if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
-                throw new ExpiredCredentialsException("token已失效，请重新登录");
+            HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
+            Subject subject = getSubject(request, httpResponse);
+            if (subject.getPrincipal() == null) {
+                // 校验jwt
+                Claims claim = jwtUtils.getClaimByToken(jwt);
+                if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
+                    // 这里判断是否为ajax请求且是以.do结尾的
+                    // 如果不是会走shiro默认的权限流程
+                    if (isAjax(request)) {
+                        httpResponse.setContentType("application/json;charset=utf-8");
+                        httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+                        httpResponse.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest)servletRequest).getHeader("Origin"));
+                        httpResponse.getWriter().print(JSONUtil.toJsonStr(Result.fail(500,"token已失效，请重新登录",null)));
+                    } else {
+                        saveRequestAndRedirectToLogin(request, httpResponse);
+                    }
+                    return false;
+                    //throw new ExpiredCredentialsException("token已失效，请重新登录");
+                }
             }
-
             // 执行登录
             return executeLogin(servletRequest, servletResponse);
         }
@@ -90,5 +107,16 @@ public class JwtFilter extends AuthenticatingFilter {
         }
 
         return super.preHandle(request, response);
+    }
+
+    /**
+     * 判断ajax请求
+     *
+     * @param request
+     * @return
+     */
+    private boolean isAjax(HttpServletRequest request) {
+        return (request.getHeader("X-Requested-With") != null
+                && "XMLHttpRequest".equals(request.getHeader("X-Requested-With").toString()));
     }
 }
