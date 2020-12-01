@@ -155,6 +155,7 @@
                             _this.isLogin = true;
                             _this.loginIng = false;
                             console.log(response.data.data)
+                            _this.setCookie("token",response.data.data.token,2);
                             // axios.post("/cloud_service/home",{
                             //     'kk':'k'
                             // },{
