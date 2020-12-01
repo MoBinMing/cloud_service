@@ -43,7 +43,7 @@ public class UserApiController {
         User user = userService.getOne(new QueryWrapper<User>().eq("user_name", loginDto.getUsername()));
         Assert.notNull(user, "用户不存在");
         if(!user.getPassword().equals(loginDto.getPassword())) {
-            return Result.fail("密码错误！");
+            return Result.fail("账号或密码错误！");
         }
         String jwt = jwtUtils.generateToken(user.getId());
         response.setHeader("Authorization", jwt);

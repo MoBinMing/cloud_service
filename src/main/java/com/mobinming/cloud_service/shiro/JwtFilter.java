@@ -1,14 +1,11 @@
 package com.mobinming.cloud_service.shiro;
 
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
 import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.util.JwtUtils;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import io.jsonwebtoken.Claims;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.util.WebUtils;
@@ -22,7 +19,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @Component
 public class JwtFilter extends AuthenticatingFilter {
