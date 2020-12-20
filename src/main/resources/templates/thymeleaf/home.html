@@ -54,6 +54,22 @@
         <div class="row mb-1">
             <div class="col" style="padding: 15px;">
                 <note_component v-show="menuIndex===0"></note_component>
+                <div class="row mt-2 p-2" v-show="menuIndex===2" >
+                    <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ming p-1"
+                         v-for="(book,index) in books" :key="index">
+                        <div class="row m-1 border border-primary">
+                            <div class="col-3 p-0 d-flex align-items-center">
+                                <img class="img-fluid d-block" :src="book.imgUrl"
+                                     οnerrοr="javascript:this.src='book.imgUrl2';">
+                            </div>
+                            <div class="col-9">
+                                <p class="mb-1"><b>{{ book.name }}</b></p>
+                                <p class="mb-0">{{ book.title }}<br>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -126,13 +142,15 @@
     var app = new Vue({
         el: '#app',
         data: {
-            menuIndex: 0,
+            menuIndex: 2,
             title: '123',
-            visible: true
+            visible: true,
+            books: [],
         },
         components: {},
         created() {
             //在页面加载时
+            this.books = this.getAllBook();
         },
         mounted() {
 
@@ -141,6 +159,59 @@
             menu(menuIndex) {
                 this.menuIndex = menuIndex;
                 console.log(menuIndex)
+            },
+            getAllBook() {
+                var _this = this;
+                axios
+                    .get('/api/getAllBook',{
+                        headers:{Authorization:_this.getCookie('token')}
+                    })
+                    .then(response => (
+                            _this.books = response.data.data
+                        )
+                    )
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            },
+            //设置cookie
+            setCookie: function (cname, cvalue, exdays) {
+                var d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                var expires = "expires=" + d.toUTCString();
+                console.info(cname + "=" + cvalue + "; " + expires);
+                document.cookie = cname + "=" + cvalue + "; " + expires;
+                console.info(document.cookie);
+            },
+            //获取cookie
+            getCookie: function (cname) {
+                var name = cname + "=";
+                var ca = document.cookie.split(';');
+                console.log("获取cookie,现在循环")
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    console.log(c)
+                    while (c.charAt(0) == ' ') c = c.substring(1);
+                    if (c.indexOf(name) != -1){
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            },
+            //清除cookie
+            clearCookie: function () {
+                this.setCookie("username", "", -1);
+            },
+            checkCookie: function () {
+                var user = this.getCookie("username");
+                if (user != "") {
+                    alert("Welcome again " + user);
+                } else {
+                    user = prompt("Please enter your name:", "");
+                    if (user != "" && user != null) {
+                        this.setCookie("username", user, 365);
+                    }
+                }
             }
         },
     });

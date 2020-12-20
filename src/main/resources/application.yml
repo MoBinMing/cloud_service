@@ -5,8 +5,8 @@ spring:
     static-locations: classpath:/static/
   datasource:
       username: root
-      password: 100200
-      url: jdbc:mysql://127.0.0.1:3306/my_cloud?useUnicode=true&characterEncoding=UTF-8
+      password: Mo100200
+      url: jdbc:mysql://127.0.0.1:3306/my_cloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false
       driver-class-name: com.mysql.jdbc.Driver #直接打mysql会有提示
       type: com.alibaba.druid.pool.DruidDataSource
   freemarker:
@@ -46,7 +46,7 @@ shiro-redis:
   enabled: true
   redis-manager:
     host: 127.0.0.1:6379
-    password: 123456
+    password: Mo100200
     timeout: 2000
 mobinming:
   jwt:

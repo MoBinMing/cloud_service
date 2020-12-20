@@ -270,7 +270,6 @@
     var app = new Vue({
         el: '#app',
         data: {
-            books: null,
             username: "",
             password: "",
             isLogin: false,
@@ -288,14 +287,7 @@
                 sessionStorage.setItem("isLogin",this.data.isLogin);
             })
         },
-        mounted() {
-            axios
-                .get('/cloud_service/book/api/getAll')
-                .then(response => (this.books = response.data))
-                .catch(function (error) { // 请求失败处理
-                    console.log(error);
-                });
-        },
+
         methods: {
             loginSubmit() {
                 this.loginIng = true;

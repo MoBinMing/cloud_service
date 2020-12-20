@@ -11,6 +11,8 @@ import org.apache.shiro.spring.web.config.ShiroFilterChainDefinition;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisManagerProperties;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -77,5 +79,11 @@ public class ShiroConfig {
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }
-
+    @Bean
+    public RedisManager redisManager(RedisManagerProperties properties){
+        RedisManager redisManager=new RedisManager();
+        redisManager.setHost(properties.getHost());
+        redisManager.setPassword(properties.getPassword());
+        return redisManager;
+    }
 }

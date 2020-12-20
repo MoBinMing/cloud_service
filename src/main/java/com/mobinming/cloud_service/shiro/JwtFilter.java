@@ -52,9 +52,9 @@ public class JwtFilter extends AuthenticatingFilter {
                 // 校验jwt
                 Claims claim = jwtUtils.getClaimByToken(jwt);
                 if(claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
-                    // 这里判断是否为ajax请求且是以.do结尾的
+                    // 这里判断是否为ajax
                     // 如果不是会走shiro默认的权限流程
-                    if (request.getServletPath().equals("/logout")) {
+                    if ("/logout".equals(request.getServletPath())) {
                         return true;
                     } else {
                         httpResponse.setContentType("application/json;charset=utf-8");
