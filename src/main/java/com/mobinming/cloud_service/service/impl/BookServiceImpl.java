@@ -29,21 +29,26 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
     @Override
     public List<Book> getList() {
-        MyShiroRedisManager manager=new MyShiroRedisManager(redisManager);
-        Jedis jedis=manager.getJedis();//manager.getJedis().set("a","aaa");
-        List<Book> list;
+        Jedis jedis = null;
+        List<Book> list=null;
         Gson gson=new Gson();
         try {
+            MyShiroRedisManager manager=new MyShiroRedisManager(redisManager);
+            jedis=manager.getJedis();//manager.getJedis().set("a","aaa");
             list=gson.fromJson(jedis.get("Books"),new TypeToken<List<Book>>() {}.getType());
-            if (list==null){
-                list=list();
-                jedis.set("Books",gson.toJson(list));
-                jedis.expire("Books", 10000);
-            }
         }catch (Exception e){
             list=list();
-            jedis.set("Books",gson.toJson(list));
-            jedis.expire("Books", 10000);
+        }finally {
+            if (list==null){
+                list=list();
+                try {
+                    assert jedis != null;
+                    jedis.set("Books",gson.toJson(list));
+                    jedis.expire("Books", 10000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         }
          return list;
     }
