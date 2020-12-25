@@ -51,9 +51,3 @@ p {
 body {
     background: url("/img/bg.jpg");
 }
-.row.m-1.border.border-primary .col-9 .mb-0 {
-     color: #FFFFFF;
- }
-.col-9 .mb-1 b {
-    color: #FFFFFF;
-}

@@ -10,7 +10,7 @@
     <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
     <script src="https://cdn.staticfile.org/axios/0.18.0/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="/css/home.css">
 </head>
 
 <body>
@@ -54,7 +54,7 @@
         <div class="row mb-1">
             <div class="col" style="padding: 15px;">
                 <note_component v-show="menuIndex===0"></note_component>
-                <div class="row mt-2 p-2" v-show="menuIndex===2">
+                <div class="row mt-2 p-2" v-show="menuIndex===2" >
                     <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 ming p-1"
                          v-for="(book,index) in books" :key="index">
                         <div class="row m-1 border border-primary">
@@ -150,7 +150,7 @@
         components: {},
         created() {
             //在页面加载时
-            this.getAllBook();
+            this.books = this.getAllBook();
         },
         mounted() {
 
@@ -163,27 +163,16 @@
             getAllBook() {
                 var _this = this;
                 axios
-                    .get('/api/getAllBook', {
-                        headers: {Authorization: _this.getCookie('token')}
+                    .get('/api/getAllBook',{
+                        headers:{Authorization:_this.getCookie('token')}
                     })
-                    .then(function (response) {
-                        if (response.data.data === "token已失效，请重新登录") {
-                            _this.clearCookie();
-                            window.location.href = "/login";
-                        }
-                        if (response.data.code === 200) {
+                    .then(response => (
                             _this.books = response.data.data
-
-                        } else {
-                            _this.clearCookie();
-                            window.location.href = "/login";
-                        }
-                    }).catch(function (error) { //
-                    console.log("请求失败处理");
-                    console.log(error);
-                    _this.clearCookie();
-                    window.location.href = "/login";
-                });
+                        )
+                    )
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
             },
             //设置cookie
             setCookie: function (cname, cvalue, exdays) {
@@ -203,7 +192,7 @@
                     var c = ca[i];
                     console.log(c)
                     while (c.charAt(0) == ' ') c = c.substring(1);
-                    if (c.indexOf(name) != -1) {
+                    if (c.indexOf(name) != -1){
                         return c.substring(name.length, c.length);
                     }
                 }
