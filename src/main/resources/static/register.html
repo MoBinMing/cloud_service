@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Êµï¿½ï¿½4</title>
+    <title>ÊµÑé4</title>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 </head>
 <body>
 
 <div>
-    <input type="text" id="text" placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½">
-    <input type="password" id="password" placeholder="ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½">
-    <button id="reb">ï¿½ï¿½ï¿½ï¿½</button>
-    <button id="button">×¢ï¿½ï¿½</button>
+    <input type="text" id="text" placeholder="ÇëÊäÈëÓÃ»§Ãû">
+    <input type="password" id="password" placeholder="ÇëÊäÈëÃÜÂë">
+    <button id="reb">ÖØÖÃ</button>
+    <button id="button">×¢²á</button>
     <span id="span"></span>
     <script type="text/javascript">
         var pwOk = 0;
@@ -23,7 +23,7 @@
             var p1 = password.value;
             var b = /^(?=.*[0-9])(?=.*[a-zA-Z])(.{6,9})$/;
             if (b.test(p1) && t1 != "") {
-                span.innerHTML = "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½";
+                span.innerHTML = "ÃÜÂë·ûºÏÒªÇó";
                 span.style.color = "blue";
                 var user = {
                     username: t1,
@@ -48,7 +48,7 @@
                 });
 
             } else {
-                span.innerHTML = "ï¿½ï¿½ï¿½ë²»ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½";
+                span.innerHTML = "ÃÜÂë²»·ûºÏÒªÇó";
                 span.style.color = "red";
                 return;
             }
