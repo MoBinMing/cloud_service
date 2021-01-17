@@ -5,13 +5,14 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.mobinming.cloud_service.entity.User">
         <id column="id" property="id" />
+        <result column="phone" property="phone" />
         <result column="user_name" property="userName" />
         <result column="password" property="password" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, user_name, password
+        id, phone, user_name, password
     </sql>
 
 </mapper>

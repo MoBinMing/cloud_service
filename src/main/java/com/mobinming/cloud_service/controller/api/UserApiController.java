@@ -1,17 +1,17 @@
 package com.mobinming.cloud_service.controller.api;
 
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.mobinming.cloud_service.common.dto.LoginDto;
+import com.mobinming.cloud_service.common.dto.RegisterDto;
 import com.mobinming.cloud_service.common.lang.Result;
-import com.mobinming.cloud_service.entity.Book;
 import com.mobinming.cloud_service.entity.User;
-import com.mobinming.cloud_service.service.BookService;
 import com.mobinming.cloud_service.service.UserService;
 import com.mobinming.cloud_service.util.JwtUtils;
-import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * <p>
@@ -62,6 +61,53 @@ public class UserApiController {
     public Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.succ(null);
+    }
+
+    @CrossOrigin
+    //用@RequestBody取值ajax用json字符串
+    //表单去除@RequestBody
+    @PostMapping("/register")
+    public Result register(@Validated @RequestBody RegisterDto registerDto) {
+        User userP = userService.getOne(new QueryWrapper<User>().eq("phone", registerDto.getPhone()));
+        User userU = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUserName, registerDto.getUserName()),false);
+        if (userP!=null){
+            Result.succ("注册失败,手机号:"+registerDto.getPhone()+"被占用");
+        }else if (userU!=null){
+            Result.succ("注册失败，用户名:"+registerDto.getUserName()+"被占用");
+        }else{
+            User user = new User();
+            BeanUtil.copyProperties(registerDto, user);
+            if (userService.save(user)){
+                return Result.succ("注册成功");
+            }
+        }
+        return Result.succ("注册失败,插入数据量失败");
+    }
+
+    @CrossOrigin
+    @GetMapping("/usernameIsAvailable")
+    public Result usernameIsAvailable(@RequestParam("username") String username) {
+        if (username!=null){
+            User one = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getUserName, username),false);
+            if (one==null){
+                return Result.succ("Available");
+            }
+            return Result.succ("unavailable");
+        }
+        return Result.succ("参数username非法");
+    }
+
+    @CrossOrigin
+    @GetMapping("/phoneIsAvailable")
+    public Result phoneIsAvailable(@RequestParam("phone") String phone) {
+        if (phone!=null){
+            User one = userService.getOne(Wrappers.<User>lambdaQuery().eq(User::getPhone, phone),false);
+            if (one==null){
+                return Result.succ("Available");
+            }
+            return Result.succ("unavailable");
+        }
+        return Result.succ("参数phone非法");
     }
 }
 

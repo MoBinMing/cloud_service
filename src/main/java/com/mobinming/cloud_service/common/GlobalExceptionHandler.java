@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e) {
         log.error("运行时异常：----------------{}", e);
-        return Result.fail(401, e.getMessage(), null);
+        return Result.fail(401, "ShiroException运行时异常\n"+e.getMessage(), null);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
 
-        return Result.fail(objectError.getDefaultMessage());
+        return Result.fail("实体校验异常\n"+objectError.getDefaultMessage());
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

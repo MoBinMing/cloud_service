@@ -29,11 +29,17 @@ public class User extends Model<User> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    private String phone;
+
     private String userName;
 
     private String password;
 
-    public User(String userName, String password) {
+    public User() {
+    }
+
+    public User(String phone, String userName, String password) {
+        this.phone = phone;
         this.userName = userName;
         this.password = password;
     }
@@ -42,5 +48,6 @@ public class User extends Model<User> {
     protected Serializable pkVal() {
         return this.id;
     }
+
 
 }
