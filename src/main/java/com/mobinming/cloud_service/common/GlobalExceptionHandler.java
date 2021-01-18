@@ -15,35 +15,35 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = ShiroException.class)
     public Result handler(ShiroException e) {
         log.error("运行时异常：----------------{}", e);
-        return Result.fail(401, "ShiroException运行时异常\n" + e.getMessage(), null);
+        return Result.fail( "ShiroException运行时异常：\n" + e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public Result handler(MethodArgumentNotValidException e) {
         log.error("实体校验异常：----------------{}", e);
         BindingResult bindingResult = e.getBindingResult();
         ObjectError objectError = bindingResult.getAllErrors().stream().findFirst().get();
 
-        return Result.fail("实体校验异常：" + objectError.getDefaultMessage());
+        return Result.fail("实体校验异常：\n" + objectError.getDefaultMessage());
     }
 
     @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = IllegalArgumentException.class)
     public Result handler(IllegalArgumentException e) {
         log.error("Assert异常：----------------{}", e);
-        return Result.fail( e.getMessage());
+        return Result.fail( "Assert异常：\n"+e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.OK)
     @ExceptionHandler(value = RuntimeException.class)
     public Result handler(RuntimeException e) {
         log.error("运行时异常：----------------{}", e);
-        return Result.fail(e.getMessage());
+        return Result.fail("服务器运行时异常：\n"+e.getMessage());
     }
 
 }
