@@ -2,7 +2,6 @@
 
  import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
  import com.baomidou.mybatisplus.core.toolkit.StringPool;
- import com.baomidou.mybatisplus.core.toolkit.StringUtils;
  import com.baomidou.mybatisplus.generator.AutoGenerator;
  import com.baomidou.mybatisplus.generator.InjectionConfig;
  import com.baomidou.mybatisplus.generator.config.*;
@@ -143,8 +142,8 @@
          // strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
          // 写于父类中的公共字段
          // strategy.setSuperEntityColumns("id");
-         String tables=scanner("\n生成全部表：1\n生成指定表：多个表名英文逗号分割");
-         if (!tables.equals("1")){
+         String tables=scanner("\n生成全部表：yes\n生成指定表：多个表名英文逗号分割");
+         if (!"yes".equals(tables)){
              strategy.setInclude(tables.split(","));
          }
          strategy.setControllerMappingHyphenStyle(true);
