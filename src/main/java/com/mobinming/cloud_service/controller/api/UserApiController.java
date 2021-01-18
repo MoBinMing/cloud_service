@@ -12,13 +12,19 @@ import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.entity.User;
 import com.mobinming.cloud_service.service.UserService;
 import com.mobinming.cloud_service.util.JwtUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -31,9 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api/")
 public class UserApiController {
-    @Autowired
-    JwtUtils jwtUtils;
-    @Autowired
+    @Resource
     protected UserService userService;
 
     @CrossOrigin
@@ -57,13 +61,14 @@ public class UserApiController {
     }
 
     @RequiresAuthentication
+    @ApiOperation(value="用户推出登录", notes="这是用户推出登录接口")
     @GetMapping("/logout")
     public Result logout() {
-        SecurityUtils.getSubject().logout();
-        return Result.succ(null);
+        return userService.logout();
     }
 
     @CrossOrigin
+    @ApiOperation(value="用户注册", notes="这是用户注册接口")
     //用@RequestBody取值ajax用json字符串
     //表单去除@RequestBody
     @PostMapping("/register")
@@ -85,6 +90,7 @@ public class UserApiController {
     }
 
     @CrossOrigin
+    @ApiOperation(value="用户名是否可用", notes="检查用户名是否被占用")
     @GetMapping("/usernameIsAvailable")
     public Result usernameIsAvailable(@RequestParam("username") String username) {
         if (username!=null){
@@ -98,6 +104,7 @@ public class UserApiController {
     }
 
     @CrossOrigin
+    @ApiOperation(value="手机号是否可用", notes="检查手机号是否被占用")
     @GetMapping("/phoneIsAvailable")
     public Result phoneIsAvailable(@RequestParam("phone") String phone) {
         if (phone!=null){

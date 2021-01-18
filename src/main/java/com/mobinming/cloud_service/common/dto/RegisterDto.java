@@ -20,7 +20,7 @@ import java.security.cert.X509Certificate;
 public class RegisterDto implements Serializable {
 
     @NotBlank(message = "用户名不能为空")
-    private String userName;
+    private String aliasName;
 
     @NotBlank(message = "密码不能为空")
     private String password;

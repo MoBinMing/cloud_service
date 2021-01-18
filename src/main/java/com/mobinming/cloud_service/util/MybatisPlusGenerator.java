@@ -68,7 +68,7 @@ public class MybatisPlusGenerator {
         dsc.setUrl("jdbc:mysql://localhost:3306/my_cloud?useUnicode=true&useSSL=false&characterEncoding=utf8");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("root");
-        dsc.setPassword("100200");
+        dsc.setPassword("Mo100200");
         autoGenerator.setDataSource(dsc);
 
         //包配置
@@ -117,7 +117,7 @@ public class MybatisPlusGenerator {
         System.out.println(help.toString());
         if (scanner.hasNext()) {
             String ipt = scanner.next();
-            if (!StringUtils.isBlank(ipt)) {
+            if (!"".equals(ipt)) {
                 return ipt;
             }
         }

@@ -34,7 +34,7 @@
          System.out.println(help.toString());
          if (scanner.hasNext()) {
              String ipt = scanner.next();
-             if (!StringUtils.isBlank(ipt)) {
+             if (!"".equals(ipt)) {
                  return ipt;
              }
          }

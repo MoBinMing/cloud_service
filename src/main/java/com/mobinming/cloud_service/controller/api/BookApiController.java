@@ -5,6 +5,7 @@ import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.entity.Book;
 import com.mobinming.cloud_service.service.BookService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisManagerProperties;
