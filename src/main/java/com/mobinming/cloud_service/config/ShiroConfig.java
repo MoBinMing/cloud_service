@@ -15,6 +15,7 @@ import org.crazycake.shiro.RedisManager;
 import org.crazycake.shiro.RedisManagerProperties;
 import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -79,11 +80,10 @@ public class ShiroConfig {
         shiroFilter.setFilterChainDefinitionMap(filterMap);
         return shiroFilter;
     }
-    @Bean
-    public RedisManager redisManager(RedisManagerProperties properties){
-        RedisManager redisManager=new RedisManager();
-        redisManager.setHost(properties.getHost());
-        redisManager.setPassword(properties.getPassword());
-        return redisManager;
+
+    @ConfigurationProperties(prefix = "shiro-redis.redis-manager")
+    @Bean("RedisManager")
+    public RedisManager redisManager(){
+        return new RedisManager();
     }
 }

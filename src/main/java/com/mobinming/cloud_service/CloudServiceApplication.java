@@ -5,7 +5,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 
+@EnableOpenApi
 @SpringBootApplication
 @MapperScan("com.mobinming.cloud_service.mapper")
 public class CloudServiceApplication {

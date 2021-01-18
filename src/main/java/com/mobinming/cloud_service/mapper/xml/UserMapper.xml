@@ -4,15 +4,23 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.mobinming.cloud_service.entity.User">
-        <id column="id" property="id" />
-        <result column="phone" property="phone" />
-        <result column="user_name" property="userName" />
-        <result column="password" property="password" />
+        <id column="id" property="id"/>
+        <result column="phone" property="phone"/>
+        <result column="alias_name" property="aliasName"/>
+        <result column="head_url" property="headUrl"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="user_name" property="nameName"/>
+        <result column="token" property="token"/>
+        <result column="register_time" property="registerTime"/>
+        <result column="signature" property="signature"/>
+        <result column="id_card" property="idCard"/>
+        <result column="gender" property="gender"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, phone, user_name, password
+        id, phone, alias_name, head_url, password, email, user_name, token, register_time, signature, id_card, gender
     </sql>
 
 </mapper>
