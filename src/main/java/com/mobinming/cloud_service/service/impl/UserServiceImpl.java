@@ -14,12 +14,13 @@ import com.mobinming.cloud_service.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.mobinming.cloud_service.util.JwtUtils;
 import org.apache.shiro.SecurityUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -64,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result usernameIsAvailable(String aliasName) {
-        Assert.notNull(aliasName, "参数aliasName不能为空");
+        Assert.notEmpty(aliasName, "参数aliasName值不能为空");
         User one = getOne(Wrappers.<User>lambdaQuery().eq(User::getAliasName, aliasName), false);
         Assert.isNull(one, "用户名不可用");
         return Result.succ("用户名可用");
@@ -72,7 +73,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Result phoneIsAvailable(String phone) {
-        Assert.notNull(phone, "参数phone不能为空");
+        Assert.isTrue(isChinaPhoneLegal(phone), "参数phone非法");
         User one = getOne(Wrappers.<User>lambdaQuery().eq(User::getPhone, phone), false);
         Assert.isNull(one,"手机号被占用");
         return Result.succ("手机号可用");
@@ -82,5 +83,21 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.succ(null);
+    }
+
+    public static boolean isChinaPhoneLegal(String str) {
+        // ^ 匹配输入字符串开始的位置
+        // \d 匹配一个或多个数字，其中 \ 要转义，所以是 \\d
+        // $ 匹配输入字符串结尾的位置
+        String regExp = "^((13[0-9])|(14[5,7,9])|(15[0-3,5-9])|(166)|(17[3,5,6,7,8])" +
+                "|(18[0-9])|(19[8,9]))\\d{8}$";
+        try {
+            Pattern p = Pattern.compile(regExp);
+            Matcher m = p.matcher(str);
+            return m.matches();
+        }catch (Exception e){
+            return false;
+        }
+
     }
 }
