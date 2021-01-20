@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
  * @since 2020-11-15
  */
 @Data
+@ApiModel(value="User对象", description="用户信息")
 public class UserDao{
     @ApiModelProperty(value = "唯一ID")
     private Integer id;
@@ -33,9 +34,6 @@ public class UserDao{
 
     @ApiModelProperty(value = "头像url")
     private String headUrl;
-
-    @ApiModelProperty(value = "密码")
-    private String password;
 
     @ApiModelProperty(value = "邮箱")
     private String email;

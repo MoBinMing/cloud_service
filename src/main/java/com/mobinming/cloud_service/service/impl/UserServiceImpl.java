@@ -3,10 +3,13 @@ package com.mobinming.cloud_service.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.google.gson.Gson;
 import com.mobinming.cloud_service.common.dto.LoginDto;
 import com.mobinming.cloud_service.common.dto.RegisterDto;
+import com.mobinming.cloud_service.common.dto.UserDao;
 import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.entity.User;
 import com.mobinming.cloud_service.mapper.UserMapper;
@@ -34,6 +37,8 @@ import java.util.regex.Pattern;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     JwtUtils jwtUtils;
+    @Resource
+    Gson gson;
     @Override
     public Result login(LoginDto loginDto, HttpServletResponse response) {
         User user = getOne(new QueryWrapper<User>().eq("phone", loginDto.getPhone()));
@@ -42,10 +47,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         String jwt = jwtUtils.generateToken(user.getId());
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
+        user.setToken(jwt);
+        UserDao userDao=BeanUtil.copyProperties(user,UserDao.class);
         // 用户可以另一个接口
         return Result.succ("登录成功", MapUtil.builder()
-                .put("user", user)
-                .put("token", jwt)
+                .put("user", gson.toJson(userDao))
                 .map()
         );
     }
