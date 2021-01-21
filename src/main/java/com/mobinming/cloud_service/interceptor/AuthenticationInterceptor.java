@@ -30,6 +30,8 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object) throws Exception {
+
+
         String token = httpServletRequest.getHeader("Authorization");// 从 http 请求头中取出 token
 
         // 如果不是映射到方法直接通过
@@ -38,27 +40,6 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
         }
         HandlerMethod handlerMethod = (HandlerMethod) object;
         Method method = handlerMethod.getMethod();
-        //检查是否有WebLoginToken注释，有则跳过认证
-        if (method.isAnnotationPresent(WebLoginToken.class)) {
-            WebLoginToken webLoginToken = method.getAnnotation(WebLoginToken.class);
-            if (webLoginToken.required()) {
-                Cookie[] cookies = httpServletRequest.getCookies();
-                if (cookies != null && cookies.length > 0) {
-                    for (Cookie cookie : cookies) {
-                        if (cookie.getName().equals("token")) {
-                            token = cookie.getValue();
-                            break;
-                        }
-                    }
-                }
-                Claims claim = jwtUtils.getClaimByToken(token);
-                if (claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
-                    httpServletResponse.sendRedirect("/login");
-                    return false;
-                }
-                return true;
-            }
-        }
         //检查是否有passtoken注释，有则跳过认证
         if (method.isAnnotationPresent(PassToken.class)) {
             PassToken passToken = method.getAnnotation(PassToken.class);
@@ -66,6 +47,28 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
+        //检查是否有WebLoginToken注释，有则跳过认证
+//        if (method.isAnnotationPresent(WebLoginToken.class)) {
+//            WebLoginToken webLoginToken = method.getAnnotation(WebLoginToken.class);
+//            if (webLoginToken.required()) {
+//                Cookie[] cookies = httpServletRequest.getCookies();
+//                if (cookies != null && cookies.length > 0) {
+//                    for (Cookie cookie : cookies) {
+//                        if (cookie.getName().equals("token")) {
+//                            token = cookie.getValue();
+//                            break;
+//                        }
+//                    }
+//                }
+//                Claims claim = jwtUtils.getClaimByToken(token);
+//                if (claim == null || jwtUtils.isTokenExpired(claim.getExpiration())) {
+//                    httpServletResponse.sendRedirect("/login");
+//                    return false;
+//                }
+//                return true;
+//            }
+//        }
+
         //检查有没有需要用户权限的注解
         if (method.isAnnotationPresent(UserLoginToken.class)) {
             UserLoginToken userLoginToken = method.getAnnotation(UserLoginToken.class);

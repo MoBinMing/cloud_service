@@ -44,6 +44,7 @@ public class JwtFilter extends AuthenticatingFilter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         String jwt = request.getHeader("Authorization");
         if(StringUtils.isEmpty(jwt)) {
+            //未带token的请求，AuthenticationInterceptor二次处理
             return true;
         } else {
             HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;

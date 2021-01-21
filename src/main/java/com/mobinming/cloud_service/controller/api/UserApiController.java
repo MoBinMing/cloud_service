@@ -12,6 +12,7 @@ import com.mobinming.cloud_service.common.lang.Result;
 import com.mobinming.cloud_service.entity.User;
 import com.mobinming.cloud_service.service.UserService;
 import com.mobinming.cloud_service.util.JwtUtils;
+import com.mobinming.cloud_service.util.jwt.PassToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -41,6 +42,7 @@ public class UserApiController {
     @Resource
     protected UserService userService;
 
+    @PassToken
     @CrossOrigin
     @ApiOperation("用户登录")
     @PostMapping(value = "/login")
@@ -55,6 +57,7 @@ public class UserApiController {
         return userService.logout();
     }
 
+    @PassToken
     @CrossOrigin
     @ApiOperation(value="用户注册", notes="这是用户注册接口")
     //用@RequestBody取值ajax用json字符串
@@ -64,6 +67,7 @@ public class UserApiController {
         return userService.register(registerDto);
     }
 
+    @PassToken
     @CrossOrigin
     @ApiOperation(value="用户名是否可用", notes="检查用户名是否被占用")
     @GetMapping("/usernameIsAvailable")
@@ -71,6 +75,7 @@ public class UserApiController {
         return userService.usernameIsAvailable(aliasName);
     }
 
+    @PassToken
     @CrossOrigin
     @ApiOperation(value="手机号是否可用", notes="检查手机号是否被占用")
     @GetMapping("/phoneIsAvailable")
