@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter;
  * @author leizige
  */
 @Configuration
-public class GSONConfiguration {
+public class GSONConfig {
 
     //序列化
     final static JsonSerializer<LocalDateTime> jsonSerializerDateTime = (localDateTime, type, jsonSerializationContext) -> new JsonPrimitive(localDateTime.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
@@ -23,7 +23,7 @@ public class GSONConfiguration {
     final static JsonDeserializer<LocalDate> jsonDeserializerDate = (jsonElement, type, jsonDeserializationContext) -> LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString(), DateTimeFormatter.ISO_LOCAL_DATE);
 
     @Bean
-    public Gson create() {
+    public static Gson create() {
         return new GsonBuilder()
                 .setPrettyPrinting()
                 /* 更改先后顺序没有影响 */

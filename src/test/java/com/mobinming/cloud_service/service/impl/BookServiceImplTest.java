@@ -2,11 +2,14 @@ package com.mobinming.cloud_service.service.impl;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.json.JSONUtil;
+import com.google.gson.Gson;
 import com.mobinming.cloud_service.common.dto.UserDao;
 import com.mobinming.cloud_service.service.BookService;
 import lombok.Data;
 import org.crazycake.shiro.RedisManager;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,16 +22,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 //@RunWith(SpringRunner.class)
 class BookServiceImplTest {
+
     @Data
     private class userDto{
         private LocalDateTime registerTime;
     }
     @Test
     public void Atest() {
-        String userJson="{\"registerTime\":1610976351000}";
-        userDto user= JSONUtil.toBean(userJson,userDto.class);
-        System.out.println(user.registerTime);
-        assertNotNull(userJson);
     }
     @Resource
     RedisManager redisManager;
