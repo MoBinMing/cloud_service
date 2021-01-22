@@ -24,6 +24,9 @@ spring:
     suffix: .html
     # mybatis-plus相关配置
   devtools:
+    livereload:
+      enabled: true
+      port: 9527
     restart:
       enabled: true
 mybatis-plus:
