@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
@@ -25,7 +25,7 @@ class BookServiceImplTest {
 
     @Data
     private class userDto{
-        private LocalDateTime registerTime;
+        private Date registerTime;
     }
     @Test
     public void Atest() {
@@ -37,7 +37,7 @@ class BookServiceImplTest {
     @Test
     void getList() {
             UserDao userDao = new UserDao();
-            userDao.setRegisterTime(LocalDateTime.now());
+            userDao.setRegisterTime(new Date());
             String json = JSONUtil.toJsonStr(userDao);
             UserDao userDao1 = JSONUtil.toBean(json, UserDao.class);
 

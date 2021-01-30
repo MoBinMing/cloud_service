@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.google.gson.Gson;
@@ -21,13 +22,14 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author mbm
@@ -37,8 +39,7 @@ import java.util.regex.Pattern;
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
     @Resource
     JwtUtils jwtUtils;
-    @Resource
-    Gson gson;
+
     @Override
     public Result login(LoginDto loginDto, HttpServletResponse response) {
         User user = getOne(new QueryWrapper<User>().eq("phone", loginDto.getPhone()));
@@ -48,10 +49,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         response.setHeader("Authorization", jwt);
         response.setHeader("Access-Control-Expose-Headers", "Authorization");
         user.setToken(jwt);
-        UserDao userDao=BeanUtil.copyProperties(user,UserDao.class);
+        UserDao userDao = BeanUtil.copyProperties(user, UserDao.class);
         // 用户可以另一个接口
         return Result.succ("登录成功", MapUtil.builder()
-                .put("user", gson.toJson(userDao))
+                .put("user", userDao)
                 .map()
         );
     }
@@ -64,7 +65,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         Assert.isNull(userU, "注册失败，用户名:" + registerDto.getAliasName() + "被占用");
         User user = new User();
         BeanUtil.copyProperties(registerDto, user);
-        user.setRegisterTime(LocalDateTime.now());
+        user.setRegisterTime(new Date());
         Assert.isTrue(save(user), "注册失败,插入数据量失败");
         return Result.succ("注册成功");
     }
@@ -81,7 +82,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result phoneIsAvailable(String phone) {
         Assert.isTrue(isChinaPhoneLegal(phone), "参数phone非法");
         User one = getOne(Wrappers.<User>lambdaQuery().eq(User::getPhone, phone), false);
-        Assert.isNull(one,"手机号被占用");
+        Assert.isNull(one, "手机号被占用");
         return Result.succ("手机号可用");
     }
 
@@ -89,6 +90,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public Result logout() {
         SecurityUtils.getSubject().logout();
         return Result.succ(null);
+    }
+
+    @Override
+    public Result searchUserByPhone(String phone, HttpServletResponse response) {
+        List<User> users = list(new QueryWrapper<User>().like("phone", phone));
+        for (User u : users) {
+            u.setPassword(null);
+            u.setToken(null);
+            u.setRegisterTime(null);
+        }
+        return Result.succ(users);
     }
 
     public static boolean isChinaPhoneLegal(String str) {
@@ -101,7 +113,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             Pattern p = Pattern.compile(regExp);
             Matcher m = p.matcher(str);
             return m.matches();
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
 

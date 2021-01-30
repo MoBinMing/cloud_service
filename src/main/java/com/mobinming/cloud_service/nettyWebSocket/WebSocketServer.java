@@ -6,17 +6,12 @@ import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.AttributeKey;
 import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import java.net.BindException;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -28,7 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @Order(value = 1)
 public class WebSocketServer implements CommandLineRunner {
-    public static ConcurrentHashMap<String, Channel> channelMap = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, ConcurrentHashMap<String,Channel>> channelMap = new ConcurrentHashMap<>();
 //    public static void main(String[] args) throws InterruptedException {
 //
 //
@@ -48,7 +43,7 @@ public class WebSocketServer implements CommandLineRunner {
                             //channel类型
                             .channel(NioServerSocketChannel.class)
                             //针对subGroup做的子处理器，childHandler针对WebSokect的初始化器
-                            .childHandler(new WebSocketinitializer());
+                            .childHandler(new WebSocketInitializer());
 
                     //绑定端口并以同步方式进行使用
                     ChannelFuture channelFuture = server.bind(1024).sync();

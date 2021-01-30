@@ -13,6 +13,7 @@ import com.mobinming.cloud_service.entity.User;
 import com.mobinming.cloud_service.service.UserService;
 import com.mobinming.cloud_service.util.JwtUtils;
 import com.mobinming.cloud_service.util.jwt.PassToken;
+import com.mobinming.cloud_service.util.jwt.UserLoginToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -25,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -81,6 +82,14 @@ public class UserApiController {
     @GetMapping("/phoneIsAvailable")
     public Result phoneIsAvailable(@RequestParam("phone") String phone) {
         return userService.phoneIsAvailable(phone);
+    }
+
+    @RequiresAuthentication
+    @CrossOrigin
+    @ApiOperation("搜索用户")
+    @GetMapping(value = "/searchUserByPhone")
+    public Result searchUserByPhone(@RequestParam("phone") String phone, HttpServletResponse response) {
+        return userService.searchUserByPhone(phone,response);
     }
 }
 

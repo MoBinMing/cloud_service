@@ -10,12 +10,13 @@
         <result column="head_url" property="headUrl"/>
         <result column="password" property="password"/>
         <result column="email" property="email"/>
-        <result column="user_name" property="nameName"/>
+        <result column="user_name" property="userName"/>
         <result column="token" property="token"/>
         <result column="register_time" property="registerTime"/>
         <result column="signature" property="signature"/>
         <result column="id_card" property="idCard"/>
         <result column="gender" property="gender"/>
+        <result column="friends_id" property="friendsId"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

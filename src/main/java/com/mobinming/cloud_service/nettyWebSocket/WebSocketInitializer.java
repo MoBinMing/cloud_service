@@ -8,7 +8,7 @@ import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 
-public class WebSocketinitializer extends ChannelInitializer<SocketChannel>{
+public class WebSocketInitializer extends ChannelInitializer<SocketChannel>{
 
     @Override
     protected void initChannel(SocketChannel socketChannel) throws Exception {

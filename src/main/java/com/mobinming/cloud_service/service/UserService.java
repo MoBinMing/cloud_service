@@ -25,4 +25,5 @@ public interface UserService extends IService<User> {
     Result usernameIsAvailable(String aliasName);
     Result phoneIsAvailable(String phone);
     Result logout();
+    Result searchUserByPhone(String phone, HttpServletResponse response);
 }

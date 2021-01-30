@@ -5,9 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
@@ -58,5 +60,9 @@ public class JwtUtils {
      */
     public boolean isTokenExpired(Date expiration) {
         return expiration.before(new Date());
+    }
+
+    public Integer getUserId(HttpServletRequest request) {
+        return Integer.valueOf(getClaimByToken(request.getHeader("Authorization")).getSubject());
     }
 }

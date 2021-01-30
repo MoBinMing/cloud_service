@@ -1,16 +1,9 @@
 package com.mobinming.cloud_service.common.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * <p>
@@ -45,7 +38,7 @@ public class UserDao{
     private String token;
 
     @ApiModelProperty(value = "注册时间")
-    private LocalDateTime registerTime;
+    private Date registerTime;
 
     @ApiModelProperty(value = "个性签名")
     private String signature;

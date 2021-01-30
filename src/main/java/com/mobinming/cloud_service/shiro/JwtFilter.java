@@ -19,6 +19,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 @Component
 public class JwtFilter extends AuthenticatingFilter {
@@ -67,8 +68,18 @@ public class JwtFilter extends AuthenticatingFilter {
                     //throw new ExpiredCredentialsException("token已失效，请重新登录");
                 }
             }
-            // 执行登录
-            return executeLogin(servletRequest, servletResponse);
+            try {
+                //确保Redis处于启动状态、否则报错
+                // 执行登录
+                return executeLogin(servletRequest, servletResponse);
+            }catch (Exception e){
+                httpResponse.setContentType("application/json;charset=utf-8");
+                httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
+                httpResponse.setHeader("Access-Control-Allow-Origin", ((HttpServletRequest)servletRequest).getHeader("Origin"));
+                httpResponse.getWriter().print(JSONUtil.toJsonStr(Result.fail(500,"服务器内部错误",null)));
+                return false;
+            }
+
         }
     }
 

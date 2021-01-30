@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
@@ -57,7 +57,7 @@ public class User extends Model<User> {
     private String token;
 
     @ApiModelProperty(value = "注册时间")
-    private LocalDateTime registerTime;
+    private Date registerTime;
 
     @ApiModelProperty(value = "个性签名")
     private String signature;
@@ -67,6 +67,17 @@ public class User extends Model<User> {
 
     @ApiModelProperty(value = "性别")
     private Integer gender;
+
+    @ApiModelProperty(value = "好友ID列表")
+    private String friendsId;
+
+    public String getFriendsId() {
+        return friendsId;
+    }
+
+    public void setFriendsId(String friendsId) {
+        this.friendsId = friendsId;
+    }
 
 
     @Override
