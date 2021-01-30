@@ -22,15 +22,20 @@
 		init: function () {
 			//首先判断浏览器是否支持WebSocket
 			if (window.WebSocket) {
-				CHAT.socket = new WebSocket("ws://localhost:1024/ws");
+				CHAT.socket = new WebSocket("ws://39.108.251.68:1024/ws");
 
 				CHAT.socket.onopen = function () {
+					var ob = {
+						clientUserId: 1,
+						clientRequestCode: "link",
+						msg:"hh",
+						sentTime:"1527769494340",
+						sendType:"client",
+						serialNumber:"html"
+					};
 					var obj = {
-						msg: "建立连接",
-						acceptId: "",
-						sentTime: new Date().getMilliseconds(),
-						sendId: "17777581902",
-						messageType: "link"
+						sendTypeJson: ob,
+						sendType: "client"
 					};
 					var json = JSON.stringify(obj);
 					CHAT.socket.send(json);
@@ -40,7 +45,8 @@
 						CHAT.socket.onmessage = function (e) {
 							var receiveNsg = window.document.getElementById("receiveNsg");
 							var obj = JSON.parse(e.data);
-							switch (obj.messageType) {
+							console.log(obj);
+							switch (obj.sendType) {
 								case "CHAR":
 									console.log("接收到消息：" + obj.msg);
 									var html = receiveNsg.innerHTML;

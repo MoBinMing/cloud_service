@@ -46,7 +46,7 @@ public class WebSocketServer implements CommandLineRunner {
                             .childHandler(new WebSocketInitializer());
 
                     //绑定端口并以同步方式进行使用
-                    ChannelFuture channelFuture = server.bind(1024).sync();
+                    ChannelFuture channelFuture = server.bind("172.18.234.191",1024).sync();
 
                     //针对channelFuture，进行相应的监听
                     channelFuture.channel().closeFuture().sync();

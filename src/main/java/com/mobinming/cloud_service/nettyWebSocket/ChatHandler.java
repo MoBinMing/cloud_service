@@ -20,9 +20,7 @@ import io.netty.util.concurrent.GlobalEventExecutor;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
@@ -202,6 +200,7 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             }
         } else {
             log.info("连接非法");
+            sendMessage(ctx,"连接非法");
         }
 
 
@@ -322,5 +321,9 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
 
     public static void sendMessage(ChannelHandlerContext ctx, SocketMessage socketMessage) {
         ctx.channel().writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(socketMessage)));
+    }
+
+    public static void sendMessage(ChannelHandlerContext ctx, String msg) {
+        ctx.channel().writeAndFlush(new TextWebSocketFrame(msg));
     }
 }

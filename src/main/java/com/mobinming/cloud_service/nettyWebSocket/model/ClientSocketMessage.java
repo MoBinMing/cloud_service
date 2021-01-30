@@ -13,5 +13,5 @@ public class ClientSocketMessage{
     private String msg;
     private Date sentTime;
     private SendType sendType;
-    private String SerialNumber;
+    private String serialNumber;
 }
