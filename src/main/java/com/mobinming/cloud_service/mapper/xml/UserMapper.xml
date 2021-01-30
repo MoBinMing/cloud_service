@@ -21,7 +21,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, phone, alias_name, head_url, password, email, user_name, token, register_time, signature, id_card, gender
+        id, phone, alias_name, head_url, password, email, user_name, token, register_time, signature, id_card, gender,friends_id
     </sql>
 
 </mapper>
