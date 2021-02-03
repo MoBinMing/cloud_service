@@ -1,14 +1,16 @@
+upload-bg-path: C:/Users/Administrator/Desktop/img/bg/
+upload-head-path: C:/Users/Administrator/Desktop/img/head/
 spring:
-  #mvc:
-    #static-path-pattern: /static/**
+  mvc:
+    static-path-pattern: /** #只能配置一个，多个用拦截器的方式
   resources: # 指定静态资源的路径
     static-locations: classpath:/static/
   datasource:
-      username: root
-      password: Mo100200
-      url: jdbc:mysql://127.0.0.1:3306/my_cloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false
-      driver-class-name: com.mysql.jdbc.Driver #直接打mysql会有提示
-      type: com.alibaba.druid.pool.DruidDataSource
+    username: root
+    password: Mo100200
+    url: jdbc:mysql://127.0.0.1:3306/my_cloud?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver #直接打mysql会有提示
+    type: com.alibaba.druid.pool.DruidDataSource
   freemarker:
     cache: false
   thymeleaf:
@@ -30,21 +32,21 @@ spring:
     restart:
       enabled: true
 mybatis-plus:
-      # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*.xml
-      # 如果是放在resource目录 classpath:mapper/*.xml
-      mapper-locations: classpath:/com/mobinming/*/mapper/xml/*.xml
-      #实体扫描，多个package用逗号或者分号分隔
-      typeAliasesPackage: com.mobinming.cloud_service.entity
-      global-config:
-        db-config:
-          # AUTO(0)数据库ID自增  NONE(1)该类型为未设置主键类型(将跟随全局)  INPUT(2)用户输入ID
-          id-type: INPUT
-      configuration:
-        map-underscore-to-camel-case: true
-        cache-enabled: false
-        call-setters-on-nulls: true
-        # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-        log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*.xml
+  # 如果是放在resource目录 classpath:mapper/*.xml
+  mapper-locations: classpath:/com/mobinming/*/mapper/xml/*.xml
+  #实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: com.mobinming.cloud_service.entity
+  global-config:
+    db-config:
+      # AUTO(0)数据库ID自增  NONE(1)该类型为未设置主键类型(将跟随全局)  INPUT(2)用户输入ID
+      id-type: INPUT
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 shiro-redis:
   enabled: true
   redis-manager:
@@ -62,7 +64,7 @@ mobinming:
     header: token
 
 server:
-    port: 80
+  port: 80
 my-socket:
   host: 127.0.0.1
   port: 1024
