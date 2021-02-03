@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -26,4 +27,5 @@ public interface UserService extends IService<User> {
     Result phoneIsAvailable(String phone);
     Result logout();
     Result searchUserByPhone(String phone, HttpServletResponse response);
+    Result upBgImg(String base64Img, HttpServletRequest request);
 }

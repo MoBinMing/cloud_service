@@ -1,6 +1,8 @@
+upload-bg-path: /www/wwwroot/springboot/img/bg/
+upload-head-path: /www/wwwroot/springboot/img/head/
 spring:
-  #mvc:
-    #static-path-pattern: /static/**
+  mvc:
+    static-path-pattern: /** #只能配置一个，多个用拦截器的方式
   resources: # 指定静态资源的路径
     static-locations: classpath:/static/
   datasource:
