@@ -7,7 +7,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -28,7 +30,10 @@ public class WebSocketServer implements CommandLineRunner {
 //
 //
 //    }
-
+    @Value("${my-socket.host}")
+    private String host;
+    @Value("${my-socket.port}")
+    private Integer port;
     @Override
     public void run(String... args) throws Exception {
         new Thread(){
@@ -46,7 +51,7 @@ public class WebSocketServer implements CommandLineRunner {
                             .childHandler(new WebSocketInitializer());
 
                     //绑定端口并以同步方式进行使用
-                    ChannelFuture channelFuture = server.bind("172.18.234.191",1024).sync();
+                    ChannelFuture channelFuture = server.bind(host,port).sync();
 
                     //针对channelFuture，进行相应的监听
                     channelFuture.channel().closeFuture().sync();
